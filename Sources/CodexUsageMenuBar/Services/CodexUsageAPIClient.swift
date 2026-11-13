@@ -89,22 +89,10 @@ struct CodexUsageAPIClient: Sendable {
     }
 }
 
-enum CodexAPIError: LocalizedError {
+enum CodexAPIError: Error {
     case unauthorized
     case httpStatus(Int)
     case network
     case invalidResponse
 
-    var errorDescription: String? {
-        switch self {
-        case .unauthorized:
-            return "Codex 登入已失效，請重新登入後再刷新。"
-        case .httpStatus(let status):
-            return "額度服務回傳錯誤（HTTP \(status)）。"
-        case .network:
-            return "無法連線至額度服務，請檢查網路後重試。"
-        case .invalidResponse:
-            return "額度服務回傳格式無法辨識，請稍後再試。"
-        }
-    }
 }

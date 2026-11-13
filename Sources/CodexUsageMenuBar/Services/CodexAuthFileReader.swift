@@ -56,22 +56,9 @@ private struct AuthTokens: Decodable {
     }
 }
 
-enum CodexAuthError: LocalizedError {
+enum CodexAuthError: Error {
     case missingFile
     case unreadableFile
     case invalidJSON
     case missingAccessToken
-
-    var errorDescription: String? {
-        switch self {
-        case .missingFile:
-            return "找不到 ~/.codex/auth.json。請先登入 Codex 後再刷新。"
-        case .unreadableFile:
-            return "無法讀取 Codex 登入檔，請確認檔案權限。"
-        case .invalidJSON:
-            return "Codex 登入檔格式無法辨識，請重新登入 Codex。"
-        case .missingAccessToken:
-            return "Codex 登入資料缺少 access token，請重新登入 Codex。"
-        }
-    }
 }

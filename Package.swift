@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "CodexUsageMenuBar",
+    defaultLocalization: "en",
     platforms: [.macOS(.v13)],
     products: [
         .executable(name: "CodexUsageMenuBar", targets: ["CodexUsageMenuBar"])
@@ -10,7 +11,10 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "CodexUsageMenuBar",
-            path: "Sources/CodexUsageMenuBar"
+            path: "Sources/CodexUsageMenuBar",
+            resources: [
+                .process("Resources")
+            ]
         )
     ]
 )

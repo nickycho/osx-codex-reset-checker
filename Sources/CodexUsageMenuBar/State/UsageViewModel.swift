@@ -4,9 +4,9 @@ import Foundation
 struct UsageDataSection<Value: Equatable>: Equatable {
     var value: Value?
     var lastSuccessAt: Date?
-    var errorMessage: String?
+    var errorMessage: AppErrorMessage?
 
-    init(value: Value? = nil, lastSuccessAt: Date? = nil, errorMessage: String? = nil) {
+    init(value: Value? = nil, lastSuccessAt: Date? = nil, errorMessage: AppErrorMessage? = nil) {
         self.value = value
         self.lastSuccessAt = lastSuccessAt
         self.errorMessage = errorMessage
@@ -100,7 +100,7 @@ final class UsageViewModel: ObservableObject {
         do {
             credentials = try authFileReader.loadCredentials()
         } catch {
-            let message = error.localizedDescription
+            let message = AppErrorMessage(error)
             state.usage.errorMessage = message
             state.resetCredits.errorMessage = message
             return
@@ -141,11 +141,11 @@ final class UsageViewModel: ObservableObject {
         do {
             return .success(try await operation())
         } catch {
-            return .failure(RefreshFailure(message: error.localizedDescription))
+            return .failure(RefreshFailure(message: AppErrorMessage(error)))
         }
     }
 }
 
 private struct RefreshFailure: Error, Sendable {
-    let message: String
+    let message: AppErrorMessage
 }
